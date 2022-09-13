@@ -885,6 +885,21 @@ void item_unlink(item *item) {
     item_unlock(hv);
 }
 
+/*MULTIPLY AND DIVIDE*/
+enum delta_result_type mult_delta(conn *c, const char *key,
+                                 const size_t nkey, bool mult,
+                                 const int64_t delta, char *buf,
+                                 uint64_t *cas) {
+    enum delta_result_type ret;
+    uint32_t hv;
+
+    hv = hash(key, nkey);
+    item_lock(hv);
+    ret = do_mult_delta(c, key, nkey, mult, delta, buf, cas, hv, NULL);
+    item_unlock(hv);
+    return ret;
+}
+
 /*
  * Does arithmetic on a numeric item value.
  */

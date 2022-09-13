@@ -914,6 +914,11 @@ extern void *ext_storage;
  * Functions
  */
 void do_accept_new_conns(const bool do_accept);
+enum delta_result_type do_mult_delta(conn *c, const char *key, const size_t nkey,
+                                    const bool mult, const int64_t delta,
+                                    char *buf, uint64_t *cas,
+                                    const uint32_t hv,
+                                    item **it_ret);
 enum delta_result_type do_add_delta(conn *c, const char *key,
                                     const size_t nkey, const bool incr,
                                     const int64_t delta, char *buf,
@@ -959,7 +964,10 @@ void return_io_pending(io_pending_t *io);
 void dispatch_conn_new(int sfd, enum conn_states init_state, int event_flags, int read_buffer_size,
     enum network_transport transport, void *ssl, uint64_t conntag, enum protocol bproto);
 void sidethread_conn_close(conn *c);
-
+enum delta_result_type mult_delta(conn *c, const char *key,
+                                 const size_t nkey, bool mult,
+                                 const int64_t delta, char *buf,
+                                 uint64_t *cas);
 /* Lock wrappers for cache functions that are called from main loop. */
 enum delta_result_type add_delta(conn *c, const char *key,
                                  const size_t nkey, bool incr,

@@ -2247,6 +2247,12 @@ enum delta_result_type do_mult_delta(conn *c, const char *key, const size_t nkey
         return NON_NUMERIC;
     }
 
+    /* HANDLE DIVIDE BY 0 */
+    if (delta == 0 && mult == 0){
+        do_item_remove(it);
+        return DIV_BY_ZERO;
+    }
+
     if (cas != NULL && *cas != 0 && ITEM_get_cas(it) != *cas) {
         do_item_remove(it);
         return DELTA_ITEM_CAS_MISMATCH;

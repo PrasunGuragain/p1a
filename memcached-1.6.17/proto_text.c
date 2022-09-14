@@ -1755,6 +1755,8 @@ static void process_marithmetic_command(conn *c, token_t *tokens, const size_t n
     // than adding even more parameters to do_add_delta.
     bool item_created = false;
     switch(do_add_delta(c, key, nkey, incr, of.delta, tmpbuf, &of.req_cas_id, hv, &it)) {
+    case DIV_BY_ZERO:
+        break;
     case OK:
         if (c->noreply)
             resp->skip = true;
@@ -2086,6 +2088,9 @@ static void process_mult_command(conn *c, token_t *tokens, const size_t ntokens,
     }
 
     switch(mult_delta(c, key, nkey, mult, delta, temp, NULL)) {
+    case DIV_BY_ZERO:
+        out_string(c, "CLIENT_ERROR cannot divide by zero");
+        break;
     case OK:
         out_string(c, temp);
         break;
@@ -2135,6 +2140,8 @@ static void process_arithmetic_command(conn *c, token_t *tokens, const size_t nt
     }
 
     switch(add_delta(c, key, nkey, incr, delta, temp, NULL)) {
+    case DIV_BY_ZERO:
+        break;
     case OK:
         out_string(c, temp);
         break;

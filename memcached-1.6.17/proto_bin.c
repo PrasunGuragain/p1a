@@ -297,6 +297,8 @@ static void complete_incr_bin(conn *c, char *extbuf) {
     switch(add_delta(c, key, nkey, c->cmd == PROTOCOL_BINARY_CMD_INCREMENT,
                      req->message.body.delta, tmpbuf,
                      &cas)) {
+    case DIV_BY_ZERO:
+        break;
     case OK:
         rsp->message.body.value = htonll(strtoull(tmpbuf, NULL, 10));
         if (cas) {

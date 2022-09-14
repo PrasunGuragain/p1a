@@ -278,7 +278,7 @@ enum store_item_type {
 };
 
 enum delta_result_type {
-    OK, NON_NUMERIC, EOM, DELTA_ITEM_NOT_FOUND, DELTA_ITEM_CAS_MISMATCH
+    OK, NON_NUMERIC, EOM, DELTA_ITEM_NOT_FOUND, DELTA_ITEM_CAS_MISMATCH, DIV_BY_ZERO
 };
 
 /** Time relative to server start. Smaller than time_t on 64-bit systems. */

@@ -2897,6 +2897,7 @@ void process_command_ascii(conn *c, char *command) {
     } else if (first == 'm'){
         if(strcmp(tokens[COMMAND_TOKEN].value, "mult") == 0){
             /*MULTIPLY*/
+            WANT_TOKENS_OR(ntokens, 4, 5);
             process_mult_command(c, tokens, ntokens, 1);
         }
     } else if (first == 'd') {
@@ -2906,6 +2907,8 @@ void process_command_ascii(conn *c, char *command) {
             process_delete_command(c, tokens, ntokens);
         } else if(strcmp(tokens[COMMAND_TOKEN].value, "div") == 0){
             /*DIVIDE*/
+            out_string(c, "Here");
+            WANT_TOKENS_OR(ntokens, 4, 5);
             process_mult_command(c, tokens, ntokens, 0);
         } else if (strcmp(tokens[COMMAND_TOKEN].value, "decr") == 0) {
 
